@@ -14,28 +14,32 @@ puts "RESPONSE CODE: " + response.code.to_s
 
 #puts response.headers
 
-puts "BODY CONTENT: \n" + response.body.to_s 
+puts "\n Object/Associative Array BODY CONTENT (PARSED): \n" + response.body.to_s 
 
-res=response.body
+res = response.body
 
-accounts=JSON.parse(res)
+# so below only works on the PARSED body which is in the form of an Object/Associate Array
+puts "\n\n KEY VALUES:"
+res.each  {|key, value| puts "#{key} is #{value}" }
+puts "\n"
+puts " Example Key of limit: " + res.select { |k,v| k == "limit"}.to_s
 
-accounts[ 'billingStreet'   ].keys
+# This prints the UNPARSED JSON body received from the API
+puts "\n\n RAW RESPONSE (NOT Parsed):"
+raw=response.raw_body
+puts raw
 
-# def format_result(accounts)
-#   result.map do |seg|
-#     "\n\n#{ seg['billingStreet'] }, #{ seg['billingCity'] }"
-#   end.join
-# end
+puts raw[0] # literally the first character in the raw response body which is a '{'
+puts raw[1] # literraly second character which is a quotation mark ' " '
 
-# text += format_result(accounts)
-# puts text
+puts res["accounts"|"billingStreet"]
+
 
 
 
 
 ###############################
-# ALL Garbage below.  Doesn't work
+# ALL Garbage below.
 ###############################
 
 
